@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ศูนย์รวมระบบงานดิจิทัล - โรงเรียนภัทรญาณวิทยา</title>
+  
+  <!-- ตั้งค่า PWA สำหรับมือถือ -->
+  <meta name="theme-color" content="#1e3a8a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ระบบงานภัทรญาณฯ">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <!-- Bootstrap 5 & Bootstrap Icons & Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      background-color: #f1f5f9;
+      color: #1e293b;
+      padding-bottom: 40px;
+    }
+    .app-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: white;
+      padding: 24px 20px 32px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+    }
+    .app-card {
+      background: white;
+      border-radius: 16px;
+      padding: 18px 14px;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e2e8f0;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+    }
+    .app-card:active {
+      transform: scale(0.96);
+    }
+    .app-card:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      color: inherit;
+    }
+    .icon-box {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: white;
+    }
+    .app-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .app-desc {
+      font-size: 0.75rem;
+      color: #64748b;
+      line-height: 1.25;
+    }
+    .badge-domain {
+      font-size: 0.65rem;
+      background-color: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: 6px;
+    }
+    .badge-line {
+      font-size: 0.65rem;
+      background-color: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: 6px;
+    }
+    .category-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #334155;
+      margin: 22px 0 12px;
+      padding-left: 8px;
+      border-left: 4px solid #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ส่วนหัวแอป -->
+  <div class="app-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <img src="icon-192.png" alt="โลโก้โรงเรียน" width="52" height="52" class="rounded-circle bg-white p-1 shadow-sm" onerror="this.style.display='none'">
+        <div>
+          <h1 class="h5 mb-1 fw-semibold">ศูนย์รวมระบบงานดิจิทัล</h1>
+          <p class="mb-0 small opacity-75">โรงเรียนภัทรญาณวิทยา</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- พื้นที่แสดงรายการระบบงาน -->
+  <div class="container mt-2" id="portal-container"></div>
+
+  <!-- ปุ่มแนะนำการติดตั้งแอป -->
+  <div class="container mt-4">
+    <div class="alert alert-light border shadow-sm rounded-4 small text-muted" role="alert">
+      <div class="fw-semibold text-dark mb-1"><i class="bi bi-phone me-1 text-primary"></i> วิธีเพิ่มไอคอนไว้หน้าจอมือถือ (ใช้งานเหมือนแอป)</div>
+      <div><strong>Android (Chrome):</strong> กดจุด 3 จุดมุมขวาบน &rarr; เลือก <em>"เพิ่มลงในหน้าจอหลัก"</em></div>
+      <div><strong>iPhone (Safari):</strong> กดปุ่มแชร์ด้านล่าง &rarr; เลือก <em>"เพิ่มไปยังหน้าจอโฮม"</em></div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // ข้อมูลระบบงานทั้งหมดของโรงเรียนภัทรญาณวิทยา
+    // ==========================================
+    const portalData = [
+      {
+        category: "งานดูแลช่วยเหลือนักเรียนและแนะแนว",
+        items: [
+          {
+            title: "ระบบเช็คชื่อ & โฮมรูม",
+            desc: "บันทึกการมาเรียนและกิจกรรมโฮมรูมรายวัน",
+            url: "https://script.google.com/macros/s/AKfycbwXKkY7xH2Qcv8VPuhqSGAkzorVpOsvGC5yygU4sUy4mU_ADgT7HUlt78ywu77IzP-Ynw/exec",
+            icon: "bi-person-check-fill",
+            color: "#2563eb"
+          },
+          {
+            title: "SmartStudent สารสนเทศนักเรียน",
+            desc: "ข้อมูลพื้นฐานและสรุปยอดนักเรียนรายวัน",
+            url: "https://script.google.com/a/macros/py.ac.th/s/AKfycbwcHyRpd9ri3CKWhNApMe8B5gkAmeHaUrP7_sCNAoAZldtnZfJAnsqO7OSCjqYsPZ5F/exec",
+            icon: "bi-people-fill",
+            color: "#0284c7",
+            note: "ใช้อีเมล @py.ac.th",
+            noteType: "domain"
+          },
+          {
+            title: "ระบบทุนการศึกษา",
+            desc: "บริหารจัดการและคัดกรองข้อมูลทุนการศึกษา",
+            url: "https://script.google.com/macros/s/AKfycbz7B51q8tDqhwYxYyVkC6Sf6fquRsKk2Oi_uegzEgm5Y4BUzN0Iz9ZOW3U2OPbygy77pw/exec",
+            icon: "bi-award-fill",
+            color: "#059669"
+          },
+          {
+            title: "พอร์ตโฟลิโอและอาชีพในฝัน",
+            desc: "แนะแนวอาชีพและจัดทำแฟ้มสะสมผลงาน",
+            url: "https://script.google.com/macros/s/AKfycbweJABFCN1aB22cfzEee2e1MafvTn2SEVBuUH870y6JL0w8L9zivf0hl10pQ1o2niI/exec",
+            icon: "bi-compass-fill",
+            color: "#8b5cf6"
+          }
+        ]
+      },
+      {
+        category: "งานวิชาการและหลักสูตร",
+        items: [
+          {
+            title: "ระบบสารสนเทศหลักสูตรพัชรภัทร",
+            desc: "ฐานข้อมูลโครงสร้างและสารสนเทศหลักสูตรสถานศึกษา",
+            url: "https://script.google.com/macros/s/AKfycbyI2waMa9WSdhbf_xqI0i1wvFJJnyNjZrwunzDK_a0DTdGaSLjmxLqh75I2yC4xrl1ldA/exec",
+            icon: "bi-journal-bookmark-fill",
+            color: "#d97706"
+          }
+        ]
+      },
+      {
+        category: "งานบริหารทั่วไปและอาคารสถานที่",
+        items: [
+          {
+            title: "ระบบจองห้องประชุม",
+            desc: "ตรวจสอบตารางและจองใช้ห้องประชุมผ่าน LINE",
+            url: "https://line.me/R/ti/p/@940rpoki",
+            icon: "bi-calendar2-check-fill",
+            color: "#06c755",
+            note: "ใช้งานผ่าน LINE",
+            noteType: "line"
+          }
+        ]
+      }
+    ];
+
+    // สร้างการ์ดเมนูอัตโนมัติ
+    const container = document.getElementById('portal-container');
+    portalData.forEach(group => {
+      let html = `<div class="category-title">${group.category}</div><div class="row g-3">`;
+      group.items.forEach(item => {
+        let badgeHtml = '';
+        if (item.note) {
+          if (item.noteType === 'line') {
+            badgeHtml = `<span class="badge-line"><i class="bi bi-line me-1"></i>${item.note}</span>`;
+          } else {
+            badgeHtml = `<span class="badge-domain"><i class="bi bi-shield-lock me-1"></i>${item.note}</span>`;
+          }
+        }
+        html += `
+          <div class="col-6 col-md-4 col-lg-3">
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="app-card">
+              <div class="icon-box" style="background-color: ${item.color};">
+                <i class="bi ${item.icon}"></i>
+              </div>
+              <div class="app-title">${item.title}</div>
+              <div class="app-desc">${item.desc}</div>
+              ${badgeHtml}
+            </a>
+          </div>
+        `;
+      });
+      html += `</div>`;
+      container.innerHTML += html;
+    });
+
+    // ลงทะเบียน Service Worker สำหรับ PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Error:', err));
+    }
+  </script>
+</body>
+</html>
