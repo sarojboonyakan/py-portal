@@ -79,15 +79,6 @@
       color: #64748b;
       line-height: 1.25;
     }
-    .badge-domain {
-      font-size: 0.65rem;
-      background-color: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-      padding: 2px 8px;
-      border-radius: 10px;
-      margin-top: 6px;
-    }
     .badge-line {
       font-size: 0.65rem;
       background-color: #f0fdf4;
@@ -136,7 +127,7 @@
 
   <script>
     // ==========================================
-    // ข้อมูลระบบงานทั้งหมดของโรงเรียนภัทรญาณวิทยา
+    // ข้อมูลระบบงานทั้งหมดของโรงเรียนภัทรญาณวิทยา (ครบ 9 ระบบ)
     // ==========================================
     const portalData = [
       {
@@ -154,9 +145,7 @@
             desc: "ข้อมูลพื้นฐานและสรุปยอดนักเรียนรายวัน",
             url: "https://script.google.com/a/macros/py.ac.th/s/AKfycbwcHyRpd9ri3CKWhNApMe8B5gkAmeHaUrP7_sCNAoAZldtnZfJAnsqO7OSCjqYsPZ5F/exec",
             icon: "bi-people-fill",
-            color: "#0284c7",
-            note: "ใช้อีเมล @py.ac.th",
-            noteType: "domain"
+            color: "#0284c7"
           },
           {
             title: "ระบบทุนการศึกษา",
@@ -197,6 +186,29 @@
             color: "#06c755",
             note: "ใช้งานผ่าน LINE",
             noteType: "line"
+          },
+          {
+            title: "ระบบแจ้งซ่อมออนไลน์",
+            desc: "แจ้งซ่อมบำรุงอุปกรณ์และอาคารสถานที่",
+            url: "https://line.me/R/ti/p/@364pbejc",
+            icon: "bi-tools",
+            color: "#ea580c",
+            note: "ใช้งานผ่าน LINE",
+            noteType: "line"
+          },
+          {
+            title: "ขออนุญาตใช้รถและยานพาหนะ",
+            desc: "ยื่นคำขอและตรวจสอบตารางการใช้รถโรงเรียน",
+            url: "https://pattarayan-vehicle-request.saran-phornphiriyani.chatgpt.site/",
+            icon: "bi-car-front-fill",
+            color: "#4f46e5"
+          },
+          {
+            title: "ดูแลความปลอดภัยรถรับส่งนักเรียน",
+            desc: "บันทึกและตรวจสอบความปลอดภัยรถรับส่งนักเรียน",
+            url: "https://script.google.com/macros/s/AKfycbxiGg2DFfiSm-CMjKvB-MQdQIIklDfdw_uxqiyrhvyXASchPLpocBITYuh54q3Fl8C-/exec",
+            icon: "bi-bus-front-fill",
+            color: "#e11d48"
           }
         ]
       }
@@ -208,12 +220,8 @@
       let html = `<div class="category-title">${group.category}</div><div class="row g-3">`;
       group.items.forEach(item => {
         let badgeHtml = '';
-        if (item.note) {
-          if (item.noteType === 'line') {
-            badgeHtml = `<span class="badge-line"><i class="bi bi-line me-1"></i>${item.note}</span>`;
-          } else {
-            badgeHtml = `<span class="badge-domain"><i class="bi bi-shield-lock me-1"></i>${item.note}</span>`;
-          }
+        if (item.note && item.noteType === 'line') {
+          badgeHtml = `<span class="badge-line"><i class="bi bi-line me-1"></i>${item.note}</span>`;
         }
         html += `
           <div class="col-6 col-md-4 col-lg-3">
